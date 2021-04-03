@@ -1,13 +1,56 @@
 package com.company;
 
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Easy_Web_SDE {
+
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
         String my_string = scn.nextLine();
         String[] para = my_string.split("[\\-., ?!():”“]+");
+        HashMap<ArrayList<String>, Integer> hm = new HashMap<> ();
+        for(String s1 : para){
+            if(hm.size() > 0){
+                ArrayList<String>[] keys = hm.keySet ().toArray (new ArrayList[0]);
+                for(ArrayList<String> s2  : keys){
+                    if(hm.get(s2) == 1){
+                        if(LCS(s2.get(0) , s1) >= 4 ){
+                            int ov = hm.get(s2);
+                            hm.remove(s2);
+                            s2.add(s1);
+                            hm.put(s2,ov + 1);
+                            break;
+                        } else{
+                            ArrayList<String> al = new ArrayList<> ();
+                            al.add(s1);
+                            hm.put(al, 1);
+                        }
+                    } else {
+                        for(int i = 0; i < s2.size (); i++){
+                            String str = s2.get(i);
+                            if(LCS(str , s1) >= 4){
+                                int ov = hm.get(s2);
+                                hm.remove(s2);
+                                s2.add(s1);
+                                hm.put(s2,ov + 1);
+                                break;
+                            } else{
+                                ArrayList<String> al = new ArrayList<> ();
+                                al.add(s1);
+                                hm.put(al, 1);
+                            }
+                        }
+                    }
+                }
+            } else{
+                ArrayList<String> al = new ArrayList<> ();
+                al.add(s1);
+                hm.put(al, 1);
+            }
+
+        }
+        System.out.println (hm);
 
     }
 
