@@ -49,7 +49,7 @@ public class MultiSolverTree {
     static int max;
     static int height;
 
-    public static void multiSolver(Node node , int depth){
+    public static void multiSolver(Node node, int depth){
         size++;
         min = Math.min(min, node.data);
         max = Math.max(max, node.data);
