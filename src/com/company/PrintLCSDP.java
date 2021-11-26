@@ -6,8 +6,6 @@ public class PrintLCSDP {
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
         String text1 = scn.next();
-//        String text1 = scn.next();
-//        String text2 = "";
         String text2 = scn.next();
         int n = text1.length();
         int m = text2.length();

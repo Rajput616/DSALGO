@@ -10,9 +10,8 @@ public class MinNoDeletionToMakeStringPalindromeDP {
         System.out.println(ans);
     }
     public static int LPS(String a) {
-        StringBuilder b = new StringBuilder();
-        for(int i = a.length() - 1; i >= 0; i--)
-            b.append(a.charAt(i));
+        StringBuilder b = new StringBuilder(a);
+        b = b.reverse();
         return LCS(a, b.toString());
     }
     public static int LCS(String a, String b) {

@@ -17,7 +17,6 @@ public class CoinChangeProb1DP {
                 if (j == 0) {
                     t[i][j] = 1;
                 }
-
             }
         }
         for (int i = 1; i < n + 1; i++) {

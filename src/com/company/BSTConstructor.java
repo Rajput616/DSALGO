@@ -1,7 +1,7 @@
 package com.company;
 import java.util.*;
 
-public class binaryTree {
+public class BSTConstructor {
     public static class Node{
         int data;
         Node left;
@@ -21,7 +21,17 @@ public class binaryTree {
             this.node = node;
             this.state = state;
         }
+    }
 
+    public static Node construct(int[] arr, int lo, int hi){
+        if(lo > hi){
+            return null;
+        }
+        int mid = (lo + hi)/2;
+        int data = arr[mid];
+        Node left = construct(arr, lo, mid-1);
+        Node right = construct(arr, mid+1, hi);
+        return new Node(data, left, right);
     }
 
     public static void display(Node node){
@@ -50,43 +60,10 @@ public class binaryTree {
     }
 
     public static void main(String[] args) throws Exception{
-        Integer[] arr = {50, 25, 12, null, null,37, 30, null, null, null, 75, 62, null, 70, null, null, 87, null, null};
-
-        Node root = new Node(arr[0], null, null);
-        Pair rtp = new Pair(root, 1);
-
-        Stack<Pair> st = new Stack<>();
-        st.push(rtp);
-
-        int idx = 0;
-        while(st.size() > 0){
-            Pair top = st.peek();
-            if(top.state == 1){
-                idx++;
-                if(arr[idx] != null){
-                    top.node.left = new Node(arr[idx], null, null);
-                    Pair lp = new Pair(top.node.left, 1);
-                    st.push(lp);
-                } else{
-                    top.node.left = null;
-                }
-                top.state++;
-            } else if(top.state == 2){
-                idx++;
-                if(arr[idx] != null){
-                    top.node.right = new Node(arr[idx], null, null);
-                    Pair rp = new Pair(top.node.right, 1);
-                    st.push(rp);
-                } else{
-                    top.node.right = null;
-                }
-                top.state++;
-            } else{
-                st.pop();
-            }
-        }
-//        display(root);
-        traversal(root);
+        int[] arr = {12, 25, 37, 50, 62, 75, 87};
+        Node root = construct(arr, 0, arr.length-1);
+        display(root);
+//        traversal(root);
     }
 
 
