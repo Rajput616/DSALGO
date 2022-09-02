@@ -67,7 +67,7 @@ class LockingTree {
     public boolean upgrade(int num, int user) {
         Node node = map.getOrDefault(num, null);
         if(node == null || node.isLocked) return false;
-        if(isAncestorLocked(num) || !checkLockedDescendants(num)) return false;
+        if(isAncestorLocked(map.getOrDefault(num, null)) || !checkLockedDescendants(map.getOrDefault(num, null))) return false;
         node.lockNode(user);
         freeAllItsChild(map.get(num));
         return true;
@@ -75,17 +75,14 @@ class LockingTree {
     
    
     
-    private boolean isAncestorLocked(int num){
-        if(num == -1) return false;;
-        Node node = map.getOrDefault(num, null);
+    private boolean isAncestorLocked(Node node){
         if(node == null) return false;
         if(node.isLocked) return true;
-        return isAncestorLocked(node.parent);
+        return isAncestorLocked(map.getOrDefault(node.parent,null));
     }
     
-    private boolean checkLockedDescendants(int num){
+    private boolean checkLockedDescendants(Node node){
         Queue<Node> q = new LinkedList();
-        Node node = map.getOrDefault(num, null);
         if(node == null) return false;
         for(Node child : node.children) q.offer(child);
         while(!q.isEmpty()){
