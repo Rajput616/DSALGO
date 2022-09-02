@@ -27,36 +27,12 @@ class LockingTree {
             if(i > 0){
                 Node ancestor = map.getOrDefault(parent[i], new Node(parent[i], false, parent[parent[i]]));
                 ancestor.children.add(node);
-                map.put(ancestor.val, ancestor);
+                if(!map.containsKey(ancestor.val))
+                    map.put(ancestor.val, ancestor);
             }
             map.put(i, node);
         }
-        // printTree(0);
     }
-     /*
-                             -1 -> 0
-                              4 -> 1
-                              0 -> 2
-                              2 -> 3
-                              5 -> 4
-                              0 -> 5
-                              4 -> 6
-                              8 -> 7
-                              2 -> 8
-                              4 -> 9
-                                
-                             0
-                            /  \
-                           2   ``5
-                          / \   /
-                         3   8 4   
-                               / \ 
-                              1   6
-                          / \
-                         5   9
-                            /  
-                           2
-    */
     
     private void printTree(int num){
         Node node = map.get(num);
