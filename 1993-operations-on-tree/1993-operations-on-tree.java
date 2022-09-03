@@ -6,25 +6,17 @@ class LockingTree {
     }
     
     public boolean lock(int num, int user) {
-        if (locked.containsKey(num)) {
-            return false;
-        } else {
-            locked.put(num, user);
-            return true;
-        }
+        if (locked.containsKey(num)) return false;
+        locked.put(num, user);
+        return true;
     }
     
     public boolean unlock(int num, int user) {
-        if (locked.containsKey(num)) {
-            if (locked.get(num)==user) {
-                locked.remove(num);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        if (locked.containsKey(num) && locked.get(num) == user){
+            locked.remove(num);
+            return true;  
+        } 
+        return false;
     }
     
     public boolean upgrade(int num, int user) {
@@ -49,12 +41,6 @@ class LockingTree {
                 it.remove();
             }
         }
-        
-//        for (int n:locked.keySet()) {
-//            if (child(n, num))  {
-//                locked.remove(n);                
-//            }
-//        }
         locked.put(num, user);        
         return true;
     }
