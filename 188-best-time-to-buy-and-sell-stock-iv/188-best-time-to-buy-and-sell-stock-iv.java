@@ -5,13 +5,7 @@ class Solution {
         for(int i = n-1; i >= 0; --i){
             for(int numTrans = 2*k-1; numTrans >= 0; --numTrans){
                 int profit = dp[i+1][numTrans];
-                if(numTrans%2 == 0){
-                    profit = Math.max(profit, -prices[i] + dp[i+1][numTrans+1]);
-                } else{
-                    profit = Math.max(profit, prices[i] + dp[i+1][numTrans+1]);
-                }
-
-
+                profit = Math.max(profit, dp[i+1][numTrans+1] + ((numTrans%2 == 0) ? -prices[i] : prices[i]));
                 dp[i][numTrans] = profit;
             }
         }
