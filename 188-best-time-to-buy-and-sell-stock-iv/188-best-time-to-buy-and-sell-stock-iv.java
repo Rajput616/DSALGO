@@ -9,13 +9,11 @@ class Solution {
         
         if(dp[i][numTrans][buy] != 0) return dp[i][numTrans][buy];
         
-        int profit = 0;
+        int profit = checkProfit(i+1, buy, numTrans, prices, dp);
         if(buy == 0){
-            profit = Math.max(-prices[i] + checkProfit(i+1, 1, numTrans, prices, dp), 
-                              checkProfit(i+1, buy, numTrans, prices, dp));
+            profit = Math.max(profit, -prices[i] + checkProfit(i+1, 1, numTrans, prices, dp));
         } else{
-            profit = Math.max(prices[i] + checkProfit(i+1, 0, numTrans-1, prices, dp), 
-                             checkProfit(i+1, buy, numTrans, prices, dp));
+            profit = Math.max(profit, prices[i] + checkProfit(i+1, 0, numTrans-1, prices, dp));
         }
         
         
