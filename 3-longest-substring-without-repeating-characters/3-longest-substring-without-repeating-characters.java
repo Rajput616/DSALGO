@@ -13,7 +13,7 @@ class Solution {
                 set.add(ch);
             } else{
                 set.add(ch);
-                max = Math.max(max, set.size());
+                max = Math.max(max, j-i+1);
             }
             j++;
         }
