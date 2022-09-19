@@ -18,9 +18,8 @@ class Solution {
         }
         ListNode front = new ListNode(0), dummy = front;
         front.next = head;
-        int revs = size / k;
         ListNode prev = head;
-        for(int i = 0; i < revs; ++i){
+        while(size >= k){
             int count = 1;
             while(count < k){
                 curr = prev.next;
@@ -31,6 +30,7 @@ class Solution {
             }
             front = prev;
             prev = prev.next;
+            size -= k;
         }
         return dummy.next;
     }
