@@ -5,12 +5,12 @@ class Solution {
         int waterStored = 0, leftMax = 0, rightMax = 0;;
         while(low <= high){
             if(height[low] <= height[high]){
-                if(height[low] < leftMax)   waterStored += (Math.min(leftMax, height[high])- height[low]);
-                else leftMax = Math.max(leftMax, height[low]);
+                if(height[low] < leftMax)   waterStored += (leftMax - height[low]);
+                else leftMax = height[low];
                 
                 low++;
             } else{
-                if(height[high] < rightMax)   waterStored += (Math.min(rightMax, height[low]) - height[high]);
+                if(height[high] < rightMax)   waterStored += (rightMax - height[high]);
                 else  rightMax = height[high];
                 
                 high--;
