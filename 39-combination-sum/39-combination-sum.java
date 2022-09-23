@@ -17,7 +17,23 @@ class Solution {
                 curr.add(arr[index]);
                 backtrack(index, target - arr[index], arr, set, curr);
                 curr.remove(curr.size()-1);
+            } else {
+                break;
             }
         }
     }
+    /* CurrList - 2,  
+    [2, 3, 6, 7] - 3 - 
+     0 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    */
 }
