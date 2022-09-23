@@ -14,7 +14,8 @@ class Solution {
         
         for(int index = i; index < arr.length; ++index){
             if(index > i && arr[index-1] == arr[index]) continue;
-            if(arr[index] > target) break; 
+            if(arr[index] > target) break;
+            
             if(arr[index] <= target){
                 curr.add(arr[index]);
                 backtrack(index+1, target - arr[index], arr, set, curr);
