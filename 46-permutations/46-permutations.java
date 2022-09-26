@@ -1,6 +1,31 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList();
+        allPerm(nums, ans, new ArrayList(), new boolean[nums.length]);
+        return ans;
+    }
+    private void allPerm(int[] nums, List<List<Integer>> ans, List<Integer> curr, boolean[] vis){
+        if(curr.size() == nums.length){
+            ans.add(new ArrayList(curr));
+            return;
+        }
+        
+        for(int j = 0; j < nums.length; ++j){
+            if(!vis[j]){
+                vis[j] = true;
+                curr.add(nums[j]);
+                allPerm(nums, ans, curr, vis);
+                curr.remove(curr.size()-1);
+                vis[j] = false;
+            }
+        }
+    }
+}
+
+/*
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList();
         allPerm(0, nums, ans, new ArrayList(), new boolean[nums.length]);
         return ans;
     }
@@ -21,3 +46,6 @@ class Solution {
         }
     }
 }
+
+
+*/
