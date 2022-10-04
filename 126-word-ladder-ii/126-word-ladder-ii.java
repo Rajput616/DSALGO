@@ -75,7 +75,7 @@
 // }
 
 class Solution {
-    Map<String, Integer> map;
+     Map<String, Integer> map;
     List<List<String>> ans;
     String b;
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
@@ -87,6 +87,8 @@ class Solution {
         Queue<Pair<String, Integer>> q = new LinkedList();
         q.offer(new Pair(beginWord, 0));
         set.remove(beginWord);
+        b = beginWord;
+        int len = beginWord.length();
         map.put(beginWord, 0);
         while(!q.isEmpty()){
             Pair<String, Integer> p = q.poll();
@@ -94,7 +96,7 @@ class Solution {
             int level = p.getValue();
             if(s.equals(endWord)) break;
             char[] chars = s.toCharArray();
-            for(int i = 0; i < chars.length; ++i){
+            for(int i = 0; i < len; ++i){
                 char ch = chars[i];
                 for(char c = 'a'; c <= 'z'; ++c){
                     if(c != ch){
@@ -110,17 +112,17 @@ class Solution {
                 chars[i] = ch;
             }
         }
-        System.out.println(map);
-        set = new HashSet(wordList);
-        if(!set.contains(beginWord)) set.add(beginWord);
-        ArrayList<String> curr = new ArrayList();
-        curr.add(endWord);
-        dfs(endWord, set, beginWord, ans, curr);
+        if(map.containsKey(endWord)){
+            ArrayList<String> curr = new ArrayList();
+            curr.add(endWord);
+            dfs(endWord, curr);    
+        }
+        
         return ans;
     }
     
-    void dfs(String word, Set<String> set, String end, List<List<String>> ans, List<String> curr){
-        if(word.equals(end)){
+    void dfs(String word, List<String> curr){
+        if(word.equals(b)){
             ArrayList<String> currAns = new ArrayList();
             for(int i = curr.size()-1; i >= 0; --i){
                 currAns.add(curr.get(i));
@@ -128,17 +130,18 @@ class Solution {
             ans.add(currAns);
             return;
         }
-        
+        int steps = map.get(word);
+        int len = word.length();
         char[] chars = word.toCharArray();
-        for(int i = 0; i < chars.length; ++i){
+        for(int i = 0; i < len; ++i){
             char ch = chars[i];
             for(char c = 'a'; c <= 'z'; ++c){
                 if(c != ch){
                     chars[i] = c;
                     String str = new String(chars);
-                    if(set.contains(str) && map.getOrDefault(str, 0) == (map.getOrDefault(word, 0)-1)){
+                    if(map.containsKey(str) && map.get(str) == steps-1){
                         curr.add(str);
-                        dfs(str, set, end, ans, curr);
+                        dfs(str, curr);
                         curr.remove(curr.size()-1);
                     }
                 }
