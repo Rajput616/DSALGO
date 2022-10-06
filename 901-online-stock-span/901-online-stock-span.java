@@ -3,22 +3,35 @@ class StockSpanner {
     int index;
     public StockSpanner() {
         st = new Stack();
-        index = -1;
+        index = 0;
     }
     
     public int next(int price) {
-        index++;
+        
         while(!st.isEmpty() && st.peek()[1] <= price) st.pop();
         
         if(st.isEmpty()) {
             st.push(new int[]{index, price});
-            return index+1;
+            index++;
+            return index;
         } else{
             int peekIndex = st.peek()[0];
             st.push(new int[]{index, price});
-            return index - peekIndex;
+            index++;
+            return index - peekIndex-1;
         }
+        
     }
+    
+    /*
+    st- [{0, 100}, {1, 80}, {5, 75}, {6, 85}]
+    index = 5
+    
+    span = 1, 1, 1, 2, 1, 4, 
+    
+    
+    
+    */
 }
 
 /**
