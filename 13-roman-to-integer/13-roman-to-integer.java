@@ -9,14 +9,16 @@ class Solution {
         map.put('V', 5);
         map.put('I', 1);
         int total = 0;
-        for(int i = 0; i < s.length(); ++i){
+        for(int i = 0; i < s.length()-1; ++i){
             char ch = s.charAt(i);
-            if(i > 0 && map.get(s.charAt(i-1)) < map.get(ch)){
-                total -= 2 * map.get(s.charAt(i-1));
-            }
-            total += map.get(ch);
+            if(map.get(s.charAt(i)) < map.get(s.charAt(i+1))){
+                total -= map.get(s.charAt(i));
+            } else
+                total += map.get(ch);
         }
-        return total;
+        return total + map.get(s.charAt(s.length()-1));
         
     }
 }
+
+//MCMXCIV // 1000 + 100 - 200 + 1000 = 1900
