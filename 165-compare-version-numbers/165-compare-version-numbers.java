@@ -25,8 +25,8 @@ class Solution {
 
 class Solution {
     public int compareVersion(String version1, String version2) {
-        String[] v1 = version1.split("[.]");
-        String[] v2 = version2.split("[.]");
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
         int n = v1.length, m = v2.length;
         int max = Math.max(n, m);
         for(int i = 0; i < max; ++i){
