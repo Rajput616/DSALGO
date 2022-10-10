@@ -16,13 +16,39 @@
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList();
-        preOrder(root, list);
+        TreeNode curr = root;
+        while(curr != null){
+            if(curr.left == null){
+                list.add(curr.val);
+                curr = curr.right;
+            } else{
+                TreeNode prev = curr.left;
+                while(prev.right != null && prev.right != curr) prev = prev.right;
+                if(prev.right == null){
+                    prev.right = curr;
+                    list.add(curr.val);
+                    curr = curr.left;
+                } else{
+                    prev.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
         return list;
     }
-    private void preOrder(TreeNode root, List<Integer> list){
-        if(root == null) return;
-        list.add(root.val);
-        preOrder(root.left, list);
-        preOrder(root.right, list);
-    }
 }
+
+// class Solution {
+//     public List<Integer> preorderTraversal(TreeNode root) {
+//         List<Integer> list = new ArrayList();
+//         preOrder(root, list);
+//         return list;
+//     }
+//     private void preOrder(TreeNode root, List<Integer> list){
+//         if(root == null) return;
+//         list.add(root.val);
+//         preOrder(root.left, list);
+//         preOrder(root.right, list);
+//     }
+// }
+
