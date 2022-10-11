@@ -23,10 +23,9 @@ class Solution {
         while(!q.isEmpty()){
             int size = q.size();
             int first = 0, last = 0;
-            int min = q.peek().getKey();
             for(int i = 0; i < size; ++i){
                 Pair<Integer,TreeNode> p = q.poll();
-                int up_key = p.getKey() - min;
+                int up_key = p.getKey();
                 if(i == 0) first = up_key;
                 if(i == size-1) last = up_key;
                 TreeNode node = p.getValue();
