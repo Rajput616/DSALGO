@@ -124,35 +124,64 @@ class Pair{
         this.node = node;
     }
 }
+
 class Solution
 {
     //Function to return a list containing the bottom view of the given tree.
     public ArrayList <Integer> bottomView(Node root)
     {
-        HashMap<Integer, ArrayList<Integer>> map = new HashMap();
+        HashMap<Integer, Integer> map = new HashMap();
         Queue<Pair> q = new LinkedList();
         q.offer(new Pair(0, root));
         int minLevel = 0;
         while(!q.isEmpty()){
             Pair p = q.poll();
             int level = p.level;
+            minLevel = Math.min(minLevel, level);
             Node node = p.node;
-            ArrayList<Integer> list = map.getOrDefault(level, new ArrayList());
-            list.add(node.data);
-            map.put(level, list);
-            if(node.left != null) {
-                q.offer(new Pair(level-1, node.left));
-                minLevel = Math.min(minLevel, level-1);
-            } 
+            map.put(level, node.data);
+            if(node.left != null) q.offer(new Pair(level-1, node.left));
             if(node.right != null) q.offer(new Pair(level+1, node.right));
         }
         ArrayList<Integer> ans = new ArrayList();
         while(map.containsKey(minLevel)){
-            ArrayList<Integer> list = map.get(minLevel);
-            ans.add(list.get(list.size()-1));
+            ans.add(map.get(minLevel));
             minLevel++;
         }
         return ans;
         
     }
 }
+
+// class Solution
+// {
+//     //Function to return a list containing the bottom view of the given tree.
+//     public ArrayList <Integer> bottomView(Node root)
+//     {
+//         HashMap<Integer, ArrayList<Integer>> map = new HashMap();
+//         Queue<Pair> q = new LinkedList();
+//         q.offer(new Pair(0, root));
+//         int minLevel = 0;
+//         while(!q.isEmpty()){
+//             Pair p = q.poll();
+//             int level = p.level;
+//             Node node = p.node;
+//             ArrayList<Integer> list = map.getOrDefault(level, new ArrayList());
+//             list.add(node.data);
+//             map.put(level, list);
+//             if(node.left != null) {
+//                 q.offer(new Pair(level-1, node.left));
+//                 minLevel = Math.min(minLevel, level-1);
+//             } 
+//             if(node.right != null) q.offer(new Pair(level+1, node.right));
+//         }
+//         ArrayList<Integer> ans = new ArrayList();
+//         while(map.containsKey(minLevel)){
+//             ArrayList<Integer> list = map.get(minLevel);
+//             ans.add(list.get(list.size()-1));
+//             minLevel++;
+//         }
+//         return ans;
+        
+//     }
+// }
