@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    int maxD;
+    Integer maxD;
     public int diameterOfBinaryTree(TreeNode root) {
         maxD = 0;
         travel(root);
