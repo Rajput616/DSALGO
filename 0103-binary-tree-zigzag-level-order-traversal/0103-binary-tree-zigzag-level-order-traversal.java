@@ -30,12 +30,8 @@ class Solution {
                 if(node.left != null) q.offer(node.left);
                 if(node.right != null) q.offer(node.right);    
             }
-            if(isRev) {
-                ans.add(curr);
-            } else{
-                Collections.reverse(curr);
-                ans.add(curr);
-            }
+            if(!isRev) Collections.reverse(curr);
+            ans.add(curr);
             isRev = !isRev;
         }
         return ans;
