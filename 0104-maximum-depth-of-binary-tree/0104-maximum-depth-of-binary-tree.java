@@ -14,19 +14,12 @@
  * }
  */
 class Solution {
-    int maxD;
     public int maxDepth(TreeNode root) {
-        maxD = 0;
-        travel(root, 0);
-        return maxD;
-    }
-    private void travel(TreeNode root, int depth){
-        if(root == null) {
-            maxD = Math.max(maxD, depth);
-            return;
-        }
+        if(root == null) return 0;
         
-        travel(root.left, depth+1);
-        travel(root.right, depth+1);
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        
+        return 1 + Math.max(leftDepth, rightDepth);
     }
 }
