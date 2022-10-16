@@ -23,12 +23,11 @@ class Solution {
     private int getSum(TreeNode root){
         if(root == null) return 0;
         
-        int leftSum = getSum(root.left);
-        int rightSum = getSum(root.right);
-        int sum = Math.max(leftSum, rightSum);
+        int leftSum = Math.max(0, getSum(root.left));
+        int rightSum = Math.max(0, getSum(root.right));
         
-        maxSum = Math.max(maxSum, Math.max(root.val, Math.max(root.val + sum, leftSum + rightSum + root.val)));
-        return Math.max(root.val, sum + root.val);
+        maxSum = Math.max(maxSum, leftSum + rightSum + root.val);
+        return root.val + Math.max(leftSum, rightSum);
     }
     
 }
