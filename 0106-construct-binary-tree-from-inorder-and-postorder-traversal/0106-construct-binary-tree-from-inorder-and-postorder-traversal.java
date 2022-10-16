@@ -14,22 +14,24 @@
  * }
  */
 class Solution {
+    int postE;
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         int len = inorder.length;
+        postE = len-1;
         Map<Integer, Integer> iMap = new HashMap();
         for(int i = 0; i < len; ++i) iMap.put(inorder[i], i);
         
-        return constructTree(0, len-1, postorder, 0, iMap);
+        return constructTree(0, len-1, postorder, iMap);
     }
-    private TreeNode constructTree(int postS, int postE, int[] pO, int inRoot, Map<Integer, Integer> iMap){
-        if(postS > postE) return null;
+    private TreeNode constructTree(int left, int right, int[] pO, Map<Integer, Integer> iMap){
+        if(left > right) return null;
         
         TreeNode root = new TreeNode(pO[postE]);
         int index = iMap.get(pO[postE]);
-        int count = index - inRoot;
+        postE--;
         
-        root.left = constructTree(postS, postS+count-1, pO, inRoot, iMap);
-        root.right = constructTree(postS+count, postE-1, pO, index+1, iMap);
+        root.right = constructTree(index+1, right, pO, iMap);
+        root.left = constructTree(left, index-1, pO, iMap);
         return root;
     }
 }
