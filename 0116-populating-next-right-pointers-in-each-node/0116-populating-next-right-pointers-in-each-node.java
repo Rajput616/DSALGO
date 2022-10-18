@@ -23,11 +23,11 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if(root == null) return null;
+        if(root == null || root.left == null || root.right == null) return root;
         
         
-        if(root.left != null) root.left.next = root.right;
-        if(root.right != null && root.next != null)
+        root.left.next = root.right;
+        if(root.next != null)
             root.right.next = root.next.left;
         
         
