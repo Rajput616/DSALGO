@@ -13,53 +13,25 @@
  *     }
  * }
  */
-
-class Node{
-    int min, max, sum;
-    
-    TreeNode node;
-    Node(int min, int max, int sum){
-        this.min = min;
-        this.max = max;
-        this.sum = sum;
-    }
-}
-
 class Solution {
-    int maxSum;
+    int max;
     public int maxSumBST(TreeNode root) {
-        maxSum = 0;
+        max = 0;
         findSum(root);
-        return maxSum;
+        return max;
     }
-    private Node findSum(TreeNode root){
-        if(root == null) return new Node(Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
+    private int[] findSum(TreeNode root){
+        if(root == null) return new int[]{0, Integer.MAX_VALUE, Integer.MIN_VALUE};
         
-        Node left = findSum(root.left);
-        Node right = findSum(root.right);
-        
+        int[] left = findSum(root.left);
+        int[] right = findSum(root.right);
         int sum = 0;
-        if(root.val > left.max && root.val < right.min){
-            sum = root.val + left.sum + right.sum;
-            maxSum = Math.max(maxSum, sum);
-            return new Node(Math.min(root.val, left.min), Math.max(root.val, right.max), sum);
+        if(root.val > left[2] && root.val < right[1]){
+            sum = root.val + left[0] + right[0];
+            max = Math.max(max, sum);
+            return new int[]{sum, Math.min(root.val, left[1]), Math.max(root.val, right[2])};
         }
         
-        return new Node(Integer.MIN_VALUE, Integer.MAX_VALUE, sum);
+        return new int[]{sum, Integer.MIN_VALUE, Integer.MAX_VALUE};
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
