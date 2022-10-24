@@ -1,32 +1,41 @@
 class MedianFinder {
-    PriorityQueue<Integer> inc, dec;
+    PriorityQueue<Integer> dec, inc;
+    int sizeD, sizeI;
     public MedianFinder() {
-        dec = new PriorityQueue<>(Collections.reverseOrder());
+        dec = new PriorityQueue(Comparator.reverseOrder());
         inc = new PriorityQueue();
+        sizeD = sizeI = 0;
     }
     
     public void addNum(int num) {
-        if(dec.isEmpty() || num <= dec.peek()) dec.add(num);
-        else inc.add(num);
-        
-        if(dec.size() - inc.size() > 1 || dec.size() - inc.size() < 0) equalize();
-    }
-    
-    private void equalize(){
-        while(dec.size() - inc.size() > 1 || dec.size() - inc.size() < 0){
-            if(dec.size() > inc.size()) {
-                int pop = dec.remove();
-                inc.add(pop);
-            } else{
-                int pop = inc.remove();
-                dec.add(pop);
-            }
+        if(dec.isEmpty() || num <= dec.peek()) {
+            dec.add(num);
+            sizeD++;
+        } else{
+            inc.add(num);
+            sizeI++;
         }
+        
+        if(sizeD - sizeI > 1 || sizeD - sizeI < 0) equalize();
     }
     
     public double findMedian() {
-        if((dec.size() + inc.size()) % 2 != 0) return dec.peek();
-        else return ((double)inc.peek() + (double)dec.peek()) / 2.0;
+        if((sizeD + sizeI) % 2 != 0) return dec.peek();
+        else return (double)(dec.peek() + inc.peek()) / 2.0;
+    }
+    
+    private void equalize(){
+        while(sizeD - sizeI > 1 || sizeD - sizeI < 0){
+            if(sizeD > sizeI){
+                inc.add(dec.poll());
+                sizeD--;
+                sizeI++;
+            } else{
+                dec.add(inc.poll());
+                sizeD++;
+                sizeI--;
+            }
+        }
     }
 }
 
