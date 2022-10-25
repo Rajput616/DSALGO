@@ -1,50 +1,25 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        int len = nums.length;
-        int start = 0, end = len-1;
-        while(start <= end){
-            int pivot = partition(start, end, nums);
-            
-            if(pivot < len-k) start = pivot + 1;
-            else if(pivot > len-k) end = pivot - 1;
-            else return nums[pivot];
-        }
-        return -1;
+        return quickselect(nums,0,nums.length-1,k);
     }
     
-    private int partition(int start, int end, int[] nums){
-        int pivot = start, temp;
-        while(start <= end){
-            while(start <= end && nums[start] <= nums[pivot]) start++;
-            while(start <= end && nums[end] > nums[pivot]) end--;
-            
-            if(start > end) break;
-            swap(nums, start, end);
-        }
-        swap(nums, end, pivot);
-        return end;
-    }
-    private void swap(int[] nums, int i, int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-    }
-}
-
-/*
-    public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue();
-        for(int i = 0; i < nums.length; ++i){
-            if(i > k-1){
-                if(nums[i] > pq.peek()){
-                    pq.remove();
-                    pq.add(nums[i]);
-                }
-            } else{
-                pq.add(nums[i]);    
+    int quickselect(int[] nums,int left,int right,int k){
+        int pivot=left;
+        for(int i=left;i<right;i++){
+            if(nums[i]<=nums[right]){
+                swap(nums,pivot++,i);
             }
         }
-        return pq.peek();
+        swap(nums,pivot,right);
+        int count=right-pivot+1;
+        if(count==k) return nums[pivot];
+        else if(count>k) return quickselect(nums,pivot+1,right,k);
+        return quickselect(nums,left,pivot-1,k-count);
     }
-
-*/
+    
+    void swap(int[] nums,int l,int r){
+        int temp=nums[l];
+        nums[l]=nums[r];
+        nums[r]=temp;
+    }
+}
