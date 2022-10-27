@@ -45,6 +45,7 @@ class Solution {
             int size = q.size();
             while(size-- > 0){
                 int node = q.poll();
+                
                 list.add(node);
                 
                 for(int neigh : adj.get(node)){
