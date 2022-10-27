@@ -40,17 +40,17 @@ class Solution {
         boolean[] vis = new boolean[V]; 
         Queue<Integer> q = new LinkedList();
         q.offer(0);
-        vis[0] = true;
         while(!q.isEmpty()){
             int size = q.size();
             while(size-- > 0){
                 int node = q.poll();
+                if(!vis[node]) list.add(node);
+                vis[node] = true;
                 
-                list.add(node);
                 
                 for(int neigh : adj.get(node)){
                     if(!vis[neigh]){
-                        vis[neigh] = true;
+                        
                         q.offer(neigh);
                     }
                 }
