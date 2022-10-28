@@ -1,25 +1,25 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        return quickselect(nums,0,nums.length-1,k);
+        return quick(nums, 0, nums.length-1, nums.length-k);
     }
     
-    int quickselect(int[] nums,int left,int right,int k){
-        int pivot=left;
-        for(int i=left;i<right;i++){
-            if(nums[i]<=nums[right]){
-                swap(nums,pivot++,i);
+    private int quick(int[] nums, int left, int right, int k){
+        int pivot = nums[right], start = left;
+        for(int i = left; i < right; ++i){
+            if(nums[i] <= pivot){
+                swap(nums, i, start);
+                start++;
             }
         }
-        swap(nums,pivot,right);
-        int count=right-pivot+1;
-        if(count==k) return nums[pivot];
-        else if(count>k) return quickselect(nums,pivot+1,right,k);
-        return quickselect(nums,left,pivot-1,k-count);
+        
+        swap(nums, start, right);
+        if(start > k) return quick(nums, left, start-1, k);
+        else if(start < k) return quick(nums, start+1, right, k);
+        else return nums[start];
     }
-    
-    void swap(int[] nums,int l,int r){
-        int temp=nums[l];
-        nums[l]=nums[r];
-        nums[r]=temp;
+    private void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
