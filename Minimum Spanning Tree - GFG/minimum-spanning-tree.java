@@ -48,27 +48,55 @@ class DriverClass
 
 // User function Template for Java
 
+class DSU{
+    int[] parent, rank;
+    DSU(int n){
+        parent = new int[n];
+        rank = new int[n];
+        for(int i = 0; i < n; ++i) parent[i] = i;
+    }
+    
+    public int findPar(int node){
+        if(node == parent[node]) return node;
+        return parent[node] = findPar(parent[node]);
+    }
+    
+    public boolean unionByRank(int u, int v){
+        int ultU = findPar(u);
+        int ultV = findPar(v);
+        
+        if(ultU == ultV) return false;
+        if(rank[ultU] < rank[ultV]){
+            parent[ultU] = ultV;
+        } else{
+            parent[ultV] = ultU;
+            rank[ultV]++;
+        }
+        
+        return true;
+    }
+    
+}
+
 class Solution
 {
-    //Function to find sum of weights of edges of the Minimum Spanning Tree.
+    
     static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) 
     {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
-        boolean[] vis = new boolean[V];
-        pq.add(new int[]{0, 0});
-        int mst = 0;
-        while(!pq.isEmpty()){
-            int[] front = pq.poll();
-            if(vis[front[1]]) continue;
-            vis[front[1]] = true;
-            mst += front[0];
-            for(ArrayList<Integer> nodeAl : adj.get(front[1])){
-                int node = nodeAl.get(0);
-                int dist = nodeAl.get(1);
-                if(!vis[node]) pq.add(new int[]{dist, node});
+        List<int[]> edges = new ArrayList();
+        for(int i = 0; i < V; ++i){
+            int node = i;
+            for(ArrayList<Integer> neigh : adj.get(i)){
+                edges.add(new int[]{node, neigh.get(0), neigh.get(1)});
             }
         }
+        Collections.sort(edges, (a,b) -> a[2] - b[2]);
+        int mst = 0;
+        DSU dsu = new DSU(V);
+        for(int[] edge : edges){
+            int u = edge[0], v = edge[1];
+            if(dsu.unionByRank(u, v)) mst += edge[2];
+        }
         return mst;
-        
     }
 }
