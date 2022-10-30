@@ -61,19 +61,17 @@ class DSU{
         return parent[node] = findPar(parent[node]);
     }
     
-    public boolean unionByRank(int u, int v){
+    public void  unionByRank(int u, int v){
         int ultU = findPar(u);
         int ultV = findPar(v);
         
-        if(ultU == ultV) return false;
+        if(ultU == ultV) return;
         if(rank[ultU] < rank[ultV]){
             parent[ultU] = ultV;
         } else{
             parent[ultV] = ultU;
             rank[ultV]++;
         }
-        
-        return true;
     }
     
 }
@@ -95,7 +93,10 @@ class Solution
         DSU dsu = new DSU(V);
         for(int[] edge : edges){
             int u = edge[0], v = edge[1];
-            if(dsu.unionByRank(u, v)) mst += edge[2];
+            if(dsu.findPar(u) != dsu.findPar(v)){
+                mst += edge[2];
+                dsu.unionByRank(u, v);
+            }
         }
         return mst;
     }
