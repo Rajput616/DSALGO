@@ -50,6 +50,27 @@ class Solution
 { 
     //Function to return max value that can be put in knapsack of capacity W.
     static int knapSack(int W, int wt[], int val[], int n) 
+    {
+         int[][] dp = new int[n+1][W+1];
+         for(int i = 1; i <= n; ++i){
+             for(int w = 1; w <= W; ++w){
+                 if(wt[i-1] <= w){
+                    dp[i][w] = Math.max(dp[i-1][w], val[i-1] + dp[i-1][w-wt[i-1]]);
+                } else{
+                    dp[i][w] = dp[i-1][w];
+                }
+             }
+         }
+         return dp[n][W];
+    } 
+}
+
+/*
+Memoized
+class Solution 
+{ 
+    //Function to return max value that can be put in knapsack of capacity W.
+    static int knapSack(int W, int wt[], int val[], int n) 
     { 
          return kS(n-1, W, wt, val, new int[n][W+1]);
     } 
@@ -66,30 +87,29 @@ class Solution
         }
     }
 }
-
-/*
-Recursive
-
-class Solution 
-{ 
-    //Function to return max value that can be put in knapsack of capacity W.
-    static int knapSack(int W, int wt[], int val[], int n) 
-    { 
-         return kS(n-1, W, wt, val);
-    } 
-    
-    private static int kS(int i, int W, int[] wt, int[] val){
-        if(i < 0 || W <= 0) return 0;
-        
-        
-        if(wt[i] <= W){
-            return val[i] + kS(i-1, W-wt[i], wt, val);
-        } else{
-            return kS(i-1, W, wt, val);
-        }
-    }
-}
-
 */
+
+// Recursive
+
+// class Solution 
+// { 
+//     //Function to return max value that can be put in knapsack of capacity W.
+//     static int knapSack(int W, int wt[], int val[], int n) 
+//     { 
+//          return kS(n-1, W, wt, val);
+//     } 
+    
+//     private static int kS(int i, int W, int[] wt, int[] val){
+//         if(i < 0 || W <= 0) return 0;
+        
+        
+//         if(wt[i] <= W){
+//             return val[i] + kS(i-1, W-wt[i], wt, val);
+//         } else{
+//             return kS(i-1, W, wt, val);
+//         }
+//     }
+// }
+
 
 
