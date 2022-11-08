@@ -25,8 +25,6 @@ class Solution{
     static int palindromicPartition(String str)
     {
         int len = str.length();
-        if(isPalin(str, 0, len-1)) return 0;
-        
         return partition(0, len, str, new int[len])-1;
     }
     
