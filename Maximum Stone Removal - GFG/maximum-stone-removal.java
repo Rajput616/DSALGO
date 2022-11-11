@@ -59,10 +59,8 @@ class Solution {
             maxRow = Math.max(maxRow, stone[0]);
             maxCol = Math.max(maxCol, stone[1]);
         }
-        maxRow++;
-        maxCol++;
         Set<Integer> set = new HashSet();
-        DSU dsu = new DSU(maxRow + maxCol + 1);
+        DSU dsu = new DSU(maxRow + maxCol + 2);
         for(int[] stone : stones){
             int r = stone[0];
             int c = stone[1] + maxRow + 1;
