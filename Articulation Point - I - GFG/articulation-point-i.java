@@ -42,44 +42,44 @@ class Solution
     //Function to return Breadth First Traversal of given graph.
     public ArrayList<Integer> articulationPoints(int V,ArrayList<ArrayList<Integer>> adj)
     {
-        int[] vis = new int[V];
+        // int[] vis = new int[V];
+        boolean[] vis = new boolean[V];
         int[] tin = new int[V];
         int[] low = new int[V];
-        // ArrayList<Integer> mark = new ArrayList();
-        int[] mark = new int[V];
+        // int[] mark = new int[V];
+        boolean[] mark = new boolean[V];
         for(int i = 0; i < V; ++i){
-            if(vis[i] == 0){
+            if(!vis[i]){
                 dfs(i, -1, vis, tin, low, mark, adj);
             }
         }
         ArrayList<Integer> ans = new ArrayList();
         for(int i = 0; i < V; ++i){
-            if(mark[i] == 1) ans.add(i);
+            if(mark[i]) ans.add(i);
         }
         if(ans.size() == 0) ans.add(-1); 
         return ans;
     }
     
-    private void dfs(int node, int parent, int[] vis, int[] tin, int[] low, int[] mark, ArrayList<ArrayList<Integer>> adj){
-        vis[node]  = 1;
-        tin[node] = timer;
-        low[node] = timer;
+    private void dfs(int node, int parent, boolean[] vis, int[] tin, int[] low, boolean[] mark, ArrayList<ArrayList<Integer>> adj){
+        vis[node]  = true;
+        low[node] = tin[node] = timer;
         timer++;
         int child = 0;
         for(int neigh : adj.get(node)){
             if(neigh == parent) continue;
             
-            if(vis[neigh] == 0){
+            if(!vis[neigh]){
                 dfs(neigh, node, vis, tin, low, mark, adj);
                 low[node] = Math.min(low[node], low[neigh]);
                 if(low[neigh] >= tin[node] && parent != -1){
-                    mark[node] = 1;
+                    mark[node] = true;
                 }
                 child++;
             } else{
                 low[node] = Math.min(low[node], tin[neigh]);
             }
         }
-        if(child > 1 && parent == -1) mark[node] = 1;
+        if(child > 1 && parent == -1) mark[node] = true;
     }
 }
